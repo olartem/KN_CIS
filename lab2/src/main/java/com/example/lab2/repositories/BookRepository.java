@@ -1,10 +1,15 @@
 package com.example.lab2.repositories;
 
 import com.example.lab2.domain.entities.BookEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
 
-public interface BookRepository extends JpaRepository<BookEntity, Long> {
-    Iterable<BookEntity> findByAuthorIgnoreCaseContaining(String author);
-    Iterable<BookEntity> findByPublisherIgnoreCaseContaining(String publisher);
+public interface BookRepository {
+    Optional<BookEntity> findById(Long id);
+    Iterable<BookEntity> findAll();
+    BookEntity save(BookEntity book);
+    BookEntity updateBook(BookEntity book);
+    void deleteById(Long id);
+    Iterable<BookEntity> findByAuthor(String author);
+    Iterable<BookEntity> findByPublisher(String publisher);
 }

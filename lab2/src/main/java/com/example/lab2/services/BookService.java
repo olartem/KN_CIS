@@ -30,7 +30,7 @@ public class BookService {
         Optional<BookEntity> existingBook = bookRepository.findById(id);
         if (existingBook.isPresent()) {
             updatedBook.setId(id);
-            return Optional.of(bookRepository.save(updatedBook));
+            return Optional.of(bookRepository.updateBook(updatedBook));
         } else {
             return Optional.empty();
         }
@@ -46,10 +46,10 @@ public class BookService {
         }
     }
     public Iterable<BookEntity> getBooksByAuthor(String author) {
-        return bookRepository.findByAuthorIgnoreCaseContaining(author);
+        return bookRepository.findByAuthor(author);
     }
 
     public Iterable<BookEntity> getBooksByPublisher(String publisher) {
-        return bookRepository.findByPublisherIgnoreCaseContaining(publisher);
+        return bookRepository.findByPublisher(publisher);
     }
 }
