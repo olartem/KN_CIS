@@ -61,9 +61,9 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public BookEntity updateBook(BookEntity book) {
+    public Optional<BookEntity> updateBook(BookEntity book) {
         String sql = "UPDATE books SET title = ?, author = ?, publishing_year = ?, publisher = ?, num_pages = ? WHERE id = ?";
-        jdbcTemplate.update(sql,
+        int result = jdbcTemplate.update(sql,
                 book.getTitle(),
                 book.getAuthor(),
                 book.getPublishingYear(),
@@ -71,7 +71,12 @@ public class BookRepositoryImpl implements BookRepository {
                 book.getNumberOfPages(),
                 book.getId()
         );
-        return book;
+        if(result == 0) {
+            return Optional.empty();
+        }
+        else {
+            return Optional.of(book);
+        }
     }
 
     private BookEntity mapRowToBook(ResultSet rs) throws SQLException {

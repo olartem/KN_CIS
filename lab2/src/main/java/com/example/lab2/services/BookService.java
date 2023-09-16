@@ -2,6 +2,7 @@ package com.example.lab2.services;
 
 import com.example.lab2.domain.entities.BookEntity;
 import com.example.lab2.repositories.BookRepository;
+import com.example.lab2.repositories.Impl.ListRepositoryImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -10,7 +11,7 @@ import java.util.Optional;
 public class BookService {
     private final BookRepository bookRepository;
 
-    public BookService(BookRepository bookRepository) {
+    public BookService(ListRepositoryImpl bookRepository) {
         this.bookRepository = bookRepository;
     }
 
@@ -30,7 +31,7 @@ public class BookService {
         Optional<BookEntity> existingBook = bookRepository.findById(id);
         if (existingBook.isPresent()) {
             updatedBook.setId(id);
-            return Optional.of(bookRepository.updateBook(updatedBook));
+            return bookRepository.updateBook(updatedBook);
         } else {
             return Optional.empty();
         }
